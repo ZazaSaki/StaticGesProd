@@ -133,12 +133,12 @@ module.exports = {
         return res.json(user);
     },
 
-    async index(req,res){
-        const users = await User.find();
-        return res.json(users);
+    async index(req, res) {
+        return await User.find()
+                        .then(l => res.json);
     },
-    
-    async store(req, res){
+
+    async store(req, res) {
         //request
         const {name, pass, email, dayList} = req.body;
         
