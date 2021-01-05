@@ -1,8 +1,6 @@
 import React,{ useState, useEffect } from "react";
 
 import List from "./components/List";
-import Item from './components/Item';
-import Header from './components/Header/';
 
 import api from './services/api';
 
@@ -11,11 +9,7 @@ import api from './services/api';
 
 function App(){
     const [ItemList, setItemList] = useState([]);
-    const [day, setDay] = useState(0);
-    const [production, setProduction] = useState(0);
     const [id, setId] = useState(1);
-
-    const [txt,setTxt] = useState("title");
 
 
     //load List
