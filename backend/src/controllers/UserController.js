@@ -54,7 +54,7 @@ module.exports = {
 
         //request
         const {email, id} = req.query;
-        const {day: dayItem, production: productionItem} = req.body;
+        const {day: dayItem, production: productionItem, ignore: ignoreItem} = req.body;
         
         //data base
         const {name, emailU, passU} = await User.findOne({email});
@@ -75,10 +75,11 @@ module.exports = {
                 //changing day value
                 List[IndexOfDay].day = dayItem;
                 List[IndexOfDay].production = productionItem;
+                List[IndexOfDay].ignore = ignoreItem;
 
             }else{
                 //appending productions
-                List = [...List, {day : dayItem, production : productionItem}]
+                List = [...List, {day : dayItem, production : productionItem, ignore : ignoreItem}]
                 
                 //sortting
                 List.sort((a,b) => a.day-b.day);
@@ -94,7 +95,7 @@ module.exports = {
             
             //adding new dayList
             dayList = [...dayList, {
-                        List : [{day : dayItem, production : productionItem}],
+                        List : [{day : dayItem, production : productionItem, ignore : ignoreItem}],
                         id : id,
                     }]
             ;

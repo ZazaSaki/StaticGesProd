@@ -17,7 +17,11 @@ function StatsBar({ItemList, goal}){
         let out = 0.0;
         let count = days;
         
-        const size =  ItemList.length;
+        const nonIgnore = ItemList.filter(e => e.ignore==false);
+        
+        console.log(nonIgnore);
+        
+        const size =  nonIgnore.length;
 
         if (size<1) {
             return 0;
@@ -28,10 +32,10 @@ function StatsBar({ItemList, goal}){
         }
 
         for (let index = size-count; index < size; index++) {
-            if (ItemList[index] == null) {
+            if (nonIgnore[index] == null) {
                 break;
             }
-            let element = parseFloat(ItemList[index].production);
+            let element = parseFloat(nonIgnore[index].production);
             
             out+=element;
             

@@ -21,6 +21,21 @@ function List({ItemList, setItemList}) {
         setItemList(ItemList.filter((e)=>(e.day!=rd)));
     }
 
+    async function ignoreItem(id, val){
+        setItemList(ItemList.map(e =>{
+                        if (e.day == id) {
+                            e.ignore = val;
+                        }
+                        return e;
+                    }));
+
+        console.log(ItemList);
+    }
+
+
+
+
+
     
     async function addItem(e){
         e.preventDefault();
@@ -35,14 +50,15 @@ function List({ItemList, setItemList}) {
         //Loading user in the server
         const res = await api.put('/userItem',{
             day : parseInt(day),
-            production : parseFloat(production)},
+            production : parseFloat(production),
+            ignore : false},
             {params:{
                 email:'test@email.com',
                 id : 1
             }});
         
         //setting list with sorted values
-        setItemList(([...ItemList, {day,production}]).sort((a,b)=>(a.day-b.day)));
+        setItemList(([...ItemList, {day,production, ignore:false}]).sort((a,b)=>(a.day-b.day)));
 
         console.log(res);
 
@@ -63,7 +79,7 @@ function List({ItemList, setItemList}) {
             <ul id="dynamic-list">
                 <Header title = {txt}></Header>
                 
-                {ItemList.map((item) => (<Item key = {item.day} id = {item.day} value = {item.production} remove = {removeItem} ></Item>))}
+                {ItemList.map((item) => (<Item key = {item.day} id = {item.day} value = {item.production} remove = {removeItem} ignore={ignoreItem} ></Item>))}
 
             </ul>
 		</div>

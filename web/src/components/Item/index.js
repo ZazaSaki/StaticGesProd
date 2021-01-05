@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import api from '../../services/api';
 
-function Item({id, value, remove}) {
+function Item({id, value, remove, ignore}) {
+
+    const [ignored, setIgnored] = useState(false);
 
     function selfRemove(e){
         e.preventDefault();
@@ -12,6 +15,13 @@ function Item({id, value, remove}) {
 
         remove(id);
     }
+
+    function selfIgnore(e) {
+        e.preventDefault();
+
+        ignore(id, !ignored);
+        setIgnored(!ignored);
+    }
     
 
     
@@ -19,8 +29,9 @@ function Item({id, value, remove}) {
     return(
         <div>
             <li>Dia {id} : {value}
-            <button id={"ignore_" + id}>ignore</button>
-            <button id={"delete_" + id} onClick = {selfRemove}>delete</button></li>
+            <button id={"ignore_" + id} onClick = {selfIgnore}>ignore</button>
+            <button id={"delete_" + id} onClick = {selfRemove}>delete</button>
+            </li>
         </div>
     );
 }
