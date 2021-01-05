@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
+const cors = require('cors');
+
 const app = express();
 mongoose.connect('mongodb+srv://StaticGestProg:qTGnCDywBq6jbco9@cluster0.3eqaz.mongodb.net/bank?retryWrites=true&w=majority', {
     useNewUrlParser: true,
@@ -8,7 +10,7 @@ mongoose.connect('mongodb+srv://StaticGestProg:qTGnCDywBq6jbco9@cluster0.3eqaz.m
 });
 
 //
-
+app.use(cors());
 app.use(express.json());
 app.use(routes);
 
