@@ -7,7 +7,7 @@ import api from "../../services/api";
 
 
 
-function List({ItemList,setItemList}) {
+function List({ItemList, setItemList}) {
     //var temp = [];
     const [day, setDay] = useState(0);
     const [production, setProduction] = useState(0);
@@ -34,8 +34,8 @@ function List({ItemList,setItemList}) {
         
         //Loading user in the server
         const res = await api.put('/userItem',{
-            day,
-            production},
+            day : parseInt(day),
+            production : parseFloat(production)},
             {params:{
                 email:'test@email.com',
                 id : 1
