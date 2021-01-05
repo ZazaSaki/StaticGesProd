@@ -14,6 +14,8 @@ const User  = require('../models/User');
 module.exports = {
     
     async updateDayListDeleteItem(req,res){
+        console.log("DeleteItem");
+        
         console.log(req.query);
 
         //request
@@ -21,8 +23,10 @@ module.exports = {
         const {day: dayItem} = req.body;
         
         //data base
-        const {name, emailU, passU} = await User.findOne({email});
+        //const {name, emailU, passU} = await User.findOne({email});
         let {dayList} = await User.findOne({email});
+        console.log(dayList);
+        
 
         //checking existing data
         const index = dayList.findIndex(e => (e.id == id));
@@ -44,6 +48,8 @@ module.exports = {
     },
     
     async updateDayListPutItem(req,res){
+        console.log("updateItem");
+        
         console.log(req.query);
 
         //request
