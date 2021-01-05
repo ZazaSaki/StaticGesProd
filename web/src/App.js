@@ -1,27 +1,65 @@
-import React, { useState } from "react";
+import React,{ useState, useEffect } from "react";
+import ReactDOM from "react";
 import Item from './components/Item';
 import Header from './components/Header/';
 import api from './services/api';
+import { render } from "react-dom";
+
 
 
 function App(){
     const [ItemList, setItemList] = useState([]);
     const [day, setDay] = useState(0);
     const [production, setProduction] = useState(0);
+    const [id, setId] = useState(1);
 
-    function getJSON(ArrList) {
-        return ArrList.map(element => ({
-            day : element[0],
-            production : element[1],
-        }));
+
+    //load List
+     useEffect(()=>{
+        
+        async function getList() {
+            const res = await api.get('/search',{params:{email : 'test@email.com'}});
+            
+            const {List} = res.data[0].dayList.find(e => e.id==id);
+
+            console.log(List); 
+
+            setItemList(List);
+        }
+
+        getList();
+        
+        //setItemList(dayList[id]);
+    },[]);
+
+    async function update(ttt) {
+        console.log(ttt);
+
+
+        const res = await api.get('/search',{params:{email : 'test@email.com'}});
+            
+        const {List} = res.data[0].dayList.find(e => e.id==id);
+
+        console.log(List);
+
+        setItemList(List);
     }
 
+    async function removeItem(rd){
+        //filter items diferente than remove
+        setItemList(ItemList.filter((e)=>(e.day!=rd)));
+    }
+
+    
     async function addItem(e){
+        e.preventDefault();
+        
+        //checking existing users
         if (ItemList.map((item) => (item.day==day)).includes(true)) {
             return;
         }
         
-        e.preventDefault();
+        //Loading user in the server
         const res = await api.put('/userItem',{
             day,
             production},
@@ -29,15 +67,13 @@ function App(){
                 email:'test@email.com',
                 id : 1
             }});
-
-        setItemList([...ItemList, {day,production}]);
+        
+        //setting list with sorted values
+        setItemList(([...ItemList, {day,production}]).sort((a,b)=>(a.day-b.day)));
 
         console.log(res);
 
-        
-        console.log(ItemList);
-        //setItemList([...ItemList, {"day" : day, "production" : production}])
-        
+        console.log(ItemList);        
     }
 
     function deleteItem() {
@@ -45,6 +81,7 @@ function App(){
         //ItemList.splice(ItemList.indexOf(it),1);
     }
 
+    
 
     return(
         <div>Hello sweet Home
@@ -60,7 +97,7 @@ function App(){
             <ul id="dynamic-list">
                 <Header title = "header1"></Header>
                 
-                {ItemList.map((item) => (<Item key = {item.day} id = {item.day} value = {item.production} ></Item>))}
+                {ItemList.map((item) => (<Item key = {item.day} id = {item.day} value = {item.production} remove = {removeItem} ></Item>))}
 
             </ul>
 		</div>
