@@ -2,14 +2,26 @@ import React, { useState } from 'react';
 
 function StatsBar({ItemList, goal}){
     const [days, setDays] = useState(5);
+    //const [done, setDone] = useState(0);
 
-    function left() {
-        let done = 0;
-        ItemList.forEach(element => {
-            done += parseFloat(element.production);
-        });
+    function daysLeft() {
         
-        return ((parseFloat(goal)-parseFloat(done))/med()).toFixed(2);
+        
+        if (ItemList.length < 1) {
+            
+            return 0;
+        }
+
+        return ((parseFloat(goal)-parseFloat(done()))/med()).toFixed(2);
+    }
+
+    function done(){
+        let sum = 0.0;
+        ItemList.forEach(element => {
+            sum += parseFloat(element.production);
+        });
+
+        return sum;
     }
 
 
@@ -57,8 +69,10 @@ function StatsBar({ItemList, goal}){
     
     return(
         <div>
+            Quantidade Restante: {(parseFloat(goal)-parseFloat(done()))} <br></br>
             Media dos ultimos {days} dia{s()} : {med().toFixed(2)} <br></br>
-            Dias Restantes dado a media: {left()} 
+            Dias Restantes dado a media: {daysLeft()} 
+
 
         </div>
     );

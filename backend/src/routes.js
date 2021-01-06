@@ -20,6 +20,7 @@ routes.post('/user', UserController.store);
 routes.put('/user', UserController.update);
 routes.put('/userItem', UserController.updateDayListPutItem);
 routes.put('/userDeleteItem', UserController.updateDayListDeleteItem);
+routes.put('/userGoal', UserController.updateGoal);
 
 //search
 routes.get('/search', SearchController.index);

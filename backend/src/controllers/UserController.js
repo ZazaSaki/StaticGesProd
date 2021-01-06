@@ -47,6 +47,40 @@ module.exports = {
 
     },
     
+    async updateGoal(req,res){
+        console.log('Update Goal');
+
+        //request
+        const {email, id} = req.query;
+        const {goal} = req.body;
+        
+        //data base
+        const {name, emailU, passU} = await User.findOne({email});
+        let {dayList} = await User.findOne({email});
+
+        //checking existing data
+        const index = dayList.findIndex(e => (e.id == id));
+
+        if(index > -1){
+            dayList[index].goal = goal;
+        }else{
+            //adding new dayList
+            dayList = [...dayList, {
+                        List : [],
+                        id : id,
+                        goal : goal
+                    }]
+            ;
+        }
+        
+        //updating user
+        const user = await User.updateOne({email}, {dayList});
+
+        return res.json(user);
+        
+    },
+
+
     async updateDayListPutItem(req,res){
         console.log("updateItem");
         
