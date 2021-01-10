@@ -25,9 +25,7 @@ module.exports = {
         //data base
         //const {name, emailU, passU} = await User.findOne({email});
         let {dayList} = await User.findOne({email});
-        console.log(dayList);
         
-
         //checking existing data
         const index = dayList.findIndex(e => (e.id == id));
 
