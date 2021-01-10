@@ -58,7 +58,7 @@ function List({ItemList, setItemList}) {
             }});
         
         //setting list with sorted values
-        setItemList(([...ItemList, {day,production, ignore:false}]).sort((a,b)=>(a.day-b.day)));
+        setItemList(([...ItemList, {day : parseFloat(day),production : parseFloat(production), ignore:false}]).sort((a,b)=>(a.day-b.day)));
 
         console.log(ItemList);        
     }
