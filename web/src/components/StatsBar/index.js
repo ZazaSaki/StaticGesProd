@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function StatsBar({ItemList, goal}){
+function StatsBar({ItemList, goal, setMed}){
     const [days, setDays] = useState(5);
     //const [done, setDone] = useState(0);
 
@@ -55,7 +55,7 @@ function StatsBar({ItemList, goal}){
 
         out = out/count;
 
-        
+        setMed(out);
 
         return out;
     }
