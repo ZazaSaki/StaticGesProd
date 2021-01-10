@@ -19,7 +19,10 @@ module.exports = {
             return;
         }
 
-        const {equation : [b,a]} = regression.logarithmic(list);
+        const {equation : [b,a]} = regression.logarithmic(list,{
+                                                             order:4,
+                                                             precision:4  
+                                                            });
         
         console.log({a,b});
 

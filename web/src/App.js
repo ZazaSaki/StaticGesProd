@@ -35,19 +35,20 @@ function App(){
     },[]);
 
     useEffect(()=>{
-        async function updatePredictionVals(){
-            const list = ItemList.map(e=>[e.day, e.production]);
-            console.log({message : "val change:",list});
-            const res = await api.put('/LogRegression',{list});
-            
-            console.log({message : "val change:", val : res.data});
-            setVals(res.data);
-            
-        }
 
         updatePredictionVals();
 
     },[ItemList]);
+
+    async function updatePredictionVals(){
+        const list = ItemList.filter(e=>e.ignore==false).map(e=>[e.day, e.production]);
+        console.log({message : "val change:",list});
+        const res = await api.put('/LogRegression',{list});
+        
+        console.log({message : "val change:", val : res.data});
+        setVals(res.data);
+        
+    }
 
     function update(e){
         e.preventDefault()
@@ -61,7 +62,8 @@ function App(){
             <button onClick = {update}>save goal</button>
             <List ItemList = {ItemList} setItemList = {setItemList}></List>
             <StatsBar ItemList = {ItemList} goal={goal} setMed={setMed}></StatsBar>
-            <Graph ItemList={ItemList} med={med} vals={vals} predictionDay={3}></Graph>
+            <button onClick={updatePredictionVals}>Refresh Graph</button>
+            <Graph ItemList={ItemList.filter(e=>e.ignore==false)} med={med} vals={vals} predictionDay={3}></Graph>
 		</div>
 		
     );

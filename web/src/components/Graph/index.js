@@ -35,7 +35,7 @@ function Graph ({ItemList,med,vals,predictionDay}){
             //labels: ItemList.map(e=>(e.day)),
             datasets:[
                 {
-                    label:'Production',
+                    label:'Produção',
                     data:Mapvals(),
                     backgroundColor:'rgba(255, 99, 132, 0.8)',
                     showLine : true,
@@ -43,7 +43,7 @@ function Graph ({ItemList,med,vals,predictionDay}){
                     
                 },
                 {
-                    label:'Media',
+                    label:'Média',
                     data:Med(),
                     backgroundColor:'rgba(132, 99, 255, 0.2)',
                     fill:true,
@@ -52,7 +52,7 @@ function Graph ({ItemList,med,vals,predictionDay}){
                     
                 },
                 {
-                    label: "f(x) = x", // Name it as you want
+                    label: "Previsão", // Name it as you want
                     data: MapValPrediction(), // Don't forget to add an empty data array, or else it will break
                     borderColor: "rgba(75, 192, 192, 1)",
                     fill: true,
