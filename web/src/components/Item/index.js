@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
 import api from '../../services/api';
+import styles from './style.module.css';
 
 function Item({id, value, remove, ignore, initIgnore}) {
 
@@ -38,13 +39,25 @@ function Item({id, value, remove, ignore, initIgnore}) {
     
 
     return(
-        <div>
-            <li>Dia {id} : {value}
-            <button id={"ignore_" + id} onClick = {selfIgnore}>ignore</button> 
-            <button id={"delete_" + id} onClick = {selfRemove}>delete</button>
-            {tag()}
-            </li>
-        </div>
+       
+                <tr className = {styles.item}>
+
+                    <td>
+                        Dia {id} :
+                    </td>
+                    <td>
+                        {value}
+                    </td>
+                    <td>
+                        <button className={styles.button} id={"ignore_" + id} onClick = {selfIgnore}>ignore</button> 
+                        <button className={styles.button} id={"delete_" + id} onClick = {selfRemove}>delete</button>
+                    </td>
+                    <td className={styles.alertinfo}>
+                        {tag()}
+                    </td>
+                </tr>
+
+        
     );
 }
 

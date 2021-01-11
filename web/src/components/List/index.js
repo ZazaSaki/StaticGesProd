@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-
+import styles from './style.module.css';
 import Item from "../../components/Item";
 import Header from "../Header";
 
@@ -64,22 +64,32 @@ function List({ItemList, setItemList}) {
     }
     
     return(
-		<div>Hello sweet Home
-           
+		<div>
             <div aria-orientation="horizontal">
-                <input type="number" id="Day" value={day} onChange = {e => setDay(e.target.value)} />
-                <input type="number" id = "Production" value = {production}  onChange = {e => setProduction(e.target.value)} />
+                <table>
+                    <tr>
+                        <td>Dia </td>
+                        <td><input type="number" id="Day" value={day} onChange = {e => setDay(e.target.value)} /></td>
+                    </tr>
+                    <tr>
+                        <td>Produção </td>
+                        <td><input type="number" id = "Production" value = {production}  onChange = {e => setProduction(e.target.value)} /></td>
+                    </tr>
+                </table>
                 <button onClick={addItem}>add item</button>
-                da
                 
                 
             </div>
-            <ul id="dynamic-list">
-                <Header title = {txt}></Header>
-                
+            <table id="dynamic-list" className={styles.table}>
+                <tr className={styles.title}>
+                    <th>Dia</th>
+                    <th>Produção</th>
+                    <th>Ações</th>
+                    <th>Status</th>
+                </tr>
                 {ItemList.map((item) => (<Item key={item.day} id={item.day} value={item.production} remove={removeItem} ignore={ignoreItem} initIgnore={item.ignore} ></Item>))}
 
-            </ul>
+            </table>
 		</div>
     );
 }

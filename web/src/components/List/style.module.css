@@ -1,0 +1,9 @@
+.table{
+    border: black;
+    background-color: rgba(49, 0, 66, 0.295);
+    border-radius: 3px;
+}
+
+.title{
+    background-color: rgba(234, 221, 255, 0.527);
+}
