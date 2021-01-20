@@ -51,11 +51,14 @@ function List({ItemList, setItemList}) {
         api.put('/userItem',{
             day : parseInt(day),
             production : parseFloat(production),
-            ignore : false},
+            ignore : false
+        },
             {params:{
                 email:'test@email.com',
                 id : 1
-            }});
+            },
+            withCredentials:true,
+        });
         
         //setting list with sorted values
         setItemList(([...ItemList, {day : parseFloat(day),production : parseFloat(production), ignore:false}]).sort((a,b)=>(a.day-b.day)));

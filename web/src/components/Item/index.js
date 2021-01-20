@@ -8,10 +8,19 @@ function Item({id, value, remove, ignore, initIgnore}) {
 
     function selfRemove(e){
         e.preventDefault();
-        api.put('/userDeleteItem',{day : id, production : value, ignore : ignored}, {params:{
-            email : "test@email.com",
-            id : 1,
-        }});
+        api.put('/userDeleteItem',
+        {
+            day : id, 
+            production : value, 
+            ignore : ignored},
+        {
+            params:{
+                email : "test@email.com",
+                id : 1,
+            },
+            withCredentials:true,
+        }
+    );
         
 
         remove(id);
@@ -25,10 +34,20 @@ function Item({id, value, remove, ignore, initIgnore}) {
         ignore(id, !ignored);
         
 
-        api.put('/userItem',{day : id, production : value, ignore : !ignored}, {params:{
-            email : "test@email.com",
-            id : 1,
-        }});
+        api.put('/userItem',
+                {
+                    day : id, 
+                    production : value, 
+                    ignore : !ignored
+                }, 
+                {
+                    params:{
+                        email : "test@email.com",
+                        id : 1,
+                    },
+                    withCredentials:true
+            }
+        );
 
         setIgnored(!ignored);
 

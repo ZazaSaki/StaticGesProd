@@ -20,9 +20,21 @@ function App(){
      useEffect(()=>{
         
         async function getList() {
-            const res = await api.get('/search',{params:{email : 'test@email.com'}});
             
-            const {List: ListRes, goal:goalRes} = res.data[0].dayList.find(e => e.id==id);
+            const res2 = await api.get('/logged',{
+                withCredentials:true,
+            });
+
+            console.log({res2});
+
+            const res = await api.get('/user',{
+                withCredentials:true,
+            });
+            
+            console.log({res});
+
+            const dayList =  res.data;
+            const {List: ListRes, goal:goalRes} = dayList.find(e => e.id==id);
             
             setItemList(ListRes);
             setGoal(goalRes);
@@ -43,7 +55,7 @@ function App(){
     async function updatePredictionVals(){
         const list = ItemList.filter(e=>e.ignore==false).map(e=>[e.day, e.production]);
         console.log({message : "val change:",list});
-        const res = await api.put('/LogRegression',{list});
+        const res = await api.put('/LogRegression',{list}, {withCredentials:true});
         
         console.log({message : "val change:", val : res.data});
         setVals(res.data);
@@ -52,7 +64,12 @@ function App(){
 
     function update(e){
         e.preventDefault()
-        api.put('/userGoal', {goal:goal}, {params : {email: "test@email.com", id : 1}});
+        api.put('/userGoal', {goal:goal}, {
+            params : {
+                email: "test@email.com", id : 1
+            },
+            withCredentials:true,
+        });
     }
  
 
