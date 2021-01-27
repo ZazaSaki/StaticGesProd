@@ -71,10 +71,21 @@ function App(){
             withCredentials:true,
         });
     }
+
+    async function logout(e) {
+        e.preventDefault();
+
+        const res = await api.get('/logout', 
+            {   
+                withCredentials:true,
+            });
+
+    }
  
 
     return(
-        <div>Hello sweet Home
+        <div>
+            <button onClick={logout}>Log out</button>
             <input type="number" id="goal" value={goal} onChange = {e => setGoal(e.target.value)}/>
             <button onClick = {update}>save goal</button>
             <List ItemList = {ItemList} setItemList = {setItemList}></List>
