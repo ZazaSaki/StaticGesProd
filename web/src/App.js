@@ -44,7 +44,7 @@ function App(){
         getList();
         
         //setItemList(dayList[id]);
-    },[]);
+    },[id]);
 
     useEffect(()=>{
 

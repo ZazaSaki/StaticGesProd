@@ -1,15 +1,34 @@
-import info from "../src/utils/holdVars";
 import api from "../src/services/api";
+import { isLogged } from "../src/services/api";
 import {useState, useEffect} from 'react';
+import Redirect from '../src/components/Redirect';
 
 function login(props){
     const [email, setEmail] = useState("testId@email.com");
     const [pass, setPass] = useState("1234");
+    const [relativePath, setRelativePath] = useState("/");
+    const [doRedirect, setDoRedirect] = useState(false);
 
     useEffect(async()=>{
-        const res = await api.get("/logged", {withCredentials:true});
-        console.log(res);
+        
+        const apiLog = await isLogged();
+        console.log({apiLog});
+        setDoRedirect(apiLog);
+
+
     }, []);
+
+    useEffect(async()=>{
+        const apiLog = await isLogged();
+        
+        if (apiLog) {
+            setDoRedirect(true);
+            
+        }
+
+    },[doRedirect]);
+
+
     
     async function login(e) {
         e.preventDefault();
@@ -22,6 +41,10 @@ function login(props){
             {   
                 withCredentials:true,
             });
+
+        const {authenticated} = res.data;
+        setDoRedirect(authenticated);
+
     }
 
     async function logout(e) {
@@ -32,6 +55,10 @@ function login(props){
                 withCredentials:true,
             });
 
+    }
+
+    if (doRedirect) {
+        return <Redirect relativePath={relativePath}></Redirect>
     }
 
     
