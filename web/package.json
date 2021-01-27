@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "react-scripts build",
+    "build": "run next build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
