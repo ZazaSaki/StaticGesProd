@@ -33,6 +33,8 @@ function login(props){
     async function login(e) {
         e.preventDefault();
 
+        console.log("login........................");
+
         const res = await api.post('/login', 
             {
                 username: email,
