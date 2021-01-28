@@ -43,6 +43,7 @@ function login(props){
             });
 
         const {authenticated} = res.data;
+        console.log({res});
         setDoRedirect(authenticated);
 
     }
