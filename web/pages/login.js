@@ -45,7 +45,7 @@ function login(props){
             });
 
         const {authenticated} = res.data;
-        console.log({res});
+        await console.log({repostaDeLogin : res});
         setDoRedirect(authenticated);
 
     }
