@@ -40,7 +40,8 @@ function List({ItemList, setItemList}) {
     async function addItem(e){
         e.preventDefault();
         
-        
+        setTxt(day);
+
         //checking existing users
         if (ItemList.map((item) => (item.day==day)).includes(true)) {
             return;
@@ -50,19 +51,15 @@ function List({ItemList, setItemList}) {
         api.put('/userItem',{
             day : parseInt(day),
             production : parseFloat(production),
-            ignore : false
-        },
+            ignore : false},
             {params:{
                 email:'test@email.com',
                 id : 1
-            },
-            withCredentials:true,
-        });
+            }});
         
         //setting list with sorted values
         setItemList(([...ItemList, {day : parseFloat(day),production : parseFloat(production), ignore:false}]).sort((a,b)=>(a.day-b.day)));
 
-        setDay(parseFloat(day) + 1);
         console.log(ItemList);        
     }
     
