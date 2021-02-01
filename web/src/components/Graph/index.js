@@ -3,7 +3,7 @@ import {Component, React} from 'react';
 import api from '../../services/api';
 
 
-function Graph ({ItemList,med,vals,predictionDay}){
+function Graph ({ItemList,predictionDay, stats:{med,logReg : vals}}){
     
     if (ItemList.length < 1) {
             

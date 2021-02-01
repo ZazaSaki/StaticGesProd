@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL : 'https://static-ges-backend.herokuapp.com/'
+    baseURL : 'http://localhost:3333/'
 });
 
 export async function isLogged() {

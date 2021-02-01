@@ -3,6 +3,7 @@ import React,{ useState, useEffect } from "react";
 import List from "./components/List";
 import StatsBar from "./components/StatsBar";
 import Graph from "./components/Graph";
+import analise from "./utils/Stats";
 
 import api from './services/api';
 
@@ -15,6 +16,7 @@ function App(){
     const [goal, setGoal] = useState(0);
     const [med,setMed] = useState(0);
     const [vals, setVals] = useState({a:0,b:0});
+    const [stats, setStats] = useState(analise(ItemList, goal));
 
     //load List
      useEffect(()=>{
@@ -46,19 +48,14 @@ function App(){
         //setItemList(dayList[id]);
     },[id]);
 
-    useEffect(()=>{
+    useEffect(async ()=>{
 
-        updatePredictionVals();
+        await updatePredictionVals();
 
     },[ItemList]);
 
     async function updatePredictionVals(){
-        const list = ItemList.filter(e=>e.ignore==false).map(e=>[e.day, e.production]);
-        console.log({message : "val change:",list});
-        const res = await api.put('/LogRegression',{list}, {withCredentials:true});
-        
-        console.log({message : "val change:", val : res.data});
-        setVals(res.data);
+        setStats(await analise(ItemList, goal));
         
     }
 
@@ -89,9 +86,9 @@ function App(){
             <input type="number" id="goal" value={goal} onChange = {e => setGoal(e.target.value)}/>
             <button onClick = {update}>save goal</button>
             <List ItemList = {ItemList} setItemList = {setItemList}></List>
-            <StatsBar ItemList = {ItemList} goal={goal} setMed={setMed}></StatsBar>
+            <StatsBar stats = {stats} goal = {goal}></StatsBar>
             <button onClick={updatePredictionVals}>Refresh Graph</button>
-            <Graph ItemList={ItemList.filter(e=>e.ignore==false)} med={med} vals={vals} predictionDay={3}></Graph>
+            <Graph ItemList={ItemList.filter(e=>e.ignore==false)} predictionDay={3} stats={stats}></Graph>
 		</div>
 		
     );
