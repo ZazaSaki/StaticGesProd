@@ -6,6 +6,8 @@ import Graph from "./components/Graph";
 import analise from "./utils/Stats";
 
 import api from './services/api';
+import LogOutBt from "./components/LogOutBt";
+import Redirect from "./components/Redirect";
 
 
 
@@ -14,20 +16,21 @@ function App(){
     const [ItemList, setItemList] = useState([]);
     const [id, setId] = useState(1);
     const [goal, setGoal] = useState(0);
-    const [med,setMed] = useState(0);
-    const [vals, setVals] = useState({a:0,b:0});
     const [stats, setStats] = useState(analise(ItemList, goal));
+
+    const [doRedirect, setDoRedirect] = useState(false);
 
     //load List
      useEffect(()=>{
         
         async function getList() {
             
-            const res2 = await api.get('/logged',{
+            const {data} = await api.get('/logged',{
                 withCredentials:true,
             });
 
-            console.log({res2});
+            console.log({data});
+            setDoRedirect(!data.authenticated);
 
             const res = await api.get('/user',{
                 withCredentials:true,
@@ -40,7 +43,7 @@ function App(){
             
             setItemList(ListRes);
             setGoal(goalRes);
-            console.log({message: "vals : ", vals});
+            
         }
 
         getList();
@@ -77,12 +80,19 @@ function App(){
                 withCredentials:true,
             });
 
+        setDoRedirect(true);
+
     }
- 
+    
+
+
+    if (doRedirect) {
+        return <Redirect relativePath={'/login'}></Redirect>
+    }
 
     return(
         <div>
-            <button onClick={logout}>Log out</button>
+            <LogOutBt then = {()=>{setDoRedirect(true)}}></LogOutBt>
             <input type="number" id="goal" value={goal} onChange = {e => setGoal(e.target.value)}/>
             <button onClick = {update}>save goal</button>
             <List ItemList = {ItemList} setItemList = {setItemList}></List>

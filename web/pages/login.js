@@ -41,6 +41,8 @@ function login(props){
             {   
                 withCredentials:true,
             });
+        
+        console.log({loginRequest : res.data});
 
         const {authenticated} = res.data;
         setDoRedirect(authenticated);
