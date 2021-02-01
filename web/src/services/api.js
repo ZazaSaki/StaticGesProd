@@ -9,5 +9,12 @@ export async function isLogged() {
     console.log({data});
     return data.authenticated;
 }
+
+export async function logout(e) {
+e.preventDefault();
+
+const res = await api.get('/logout', { withCredentials: true });
+
+}
     
 export default api;
